@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KinKeeper — a care thread between Maggie and Dana</title>
+<meta name="description" content="KinKeeper: a simulated care-coordination companion. Synthetic hackathon demo — fictional character and sample data; text you enter is stored in a local demo journal. No real notifications, no emergency response, no medical advice.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23f7f1e6'/%3E%3Cpath d='M8 20c4-10 8-10 8-2s4 8 8-4' fill='none' stroke='%231b6b5f' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<div class="masthead">
+<header class="topbar">
+  <div class="brand">
+    <svg class="brand-mark" viewBox="0 0 40 40" width="40" height="40" aria-hidden="true">
+      <circle cx="20" cy="20" r="19" fill="none" stroke="currentColor" stroke-width="1.4" opacity="0.35"/>
+      <path d="M9 25c5-12 9-12 9-2.5S22.5 31 31 16.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
+      <circle cx="9" cy="25" r="2.4" fill="currentColor"/>
+      <circle cx="31" cy="16.5" r="2.4" fill="currentColor"/>
+    </svg>
+    <div class="brand-text">
+      <h1>KinKeeper</h1>
+      <p>A care thread between Maggie and Dana</p>
+    </div>
+  </div>
+  <div class="clock-chip" title="The demo runs on a simulated clock. Only the Explore-the-demo controls move it — nothing here is real time.">
+    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+    <span class="clock-label">Demo time (simulated)</span>
+    <span id="clock" class="clock-value">—</span>
+  </div>
+  <p class="safety-strip" role="note">
+    <strong>Synthetic demo</strong> — Maggie is a fictional character with sample data.
+    <span class="strip-full">Type only fictional details: what you enter is saved in this demo&rsquo;s journal on this computer.
+    No notifications leave this page, no emergency response, no medical advice.</span>
+    <span class="strip-short">Type only fictional details — they are saved in this demo&rsquo;s journal on this computer. No notifications, no emergency response, no medical advice.</span>
+  </p>
+</header>
+
+<nav class="tabs" role="tablist" aria-label="KinKeeper views">
+  <button class="tab is-active" role="tab" aria-selected="true" aria-controls="panel-today" id="tab-today" data-tab="today">
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-8 8H5l-2 2V12a8 8 0 0 1 8-8h2a8 8 0 0 1 8 8z"/></svg>
+    <span class="tab-text">Today</span>
+    <span class="tab-role">Maggie</span>
+  </button>
+  <button class="tab" role="tab" aria-selected="false" aria-controls="panel-family" id="tab-family" data-tab="family" tabindex="-1">
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+    <span class="tab-text">Family updates</span>
+    <span class="tab-role">Dana</span>
+    <span class="tab-badge" id="inbox-badge" hidden>0</span>
+  </button>
+  <button class="tab" role="tab" aria-selected="false" aria-controls="panel-safety" id="tab-safety" data-tab="safety" tabindex="-1">
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-3.5 8-10V5l-8-3-8 3v7c0 6.5 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+    <span class="tab-text">Safety</span>
+  </button>
+  <button class="tab tab-explore" role="tab" aria-selected="false" aria-controls="panel-explore" id="tab-explore" data-tab="explore" tabindex="-1">
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m14.5 9.5-1.7 4-4 1.7 1.7-4z"/></svg>
+    <span class="tab-text">Explore the demo</span>
+  </button>
+</nav>
+</div>
+
+<main id="main" tabindex="-1">
+
+  <!-- ============================ TODAY · MAGGIE ============================ -->
+  <section class="panel is-active" role="tabpanel" id="panel-today" aria-labelledby="tab-today">
+    <p class="role-banner">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a7 7 0 0 1 14 0v1"/></svg>
+      <span><strong>Maggie&rsquo;s view.</strong><span class="banner-full"> This is her daily check-in with KinKeeper. Nothing is pushed to Dana — no text, email, or call. If her words sound worrying, her exact quote appears on the Family updates page, which Dana would only see by opening this app.</span><span class="banner-short"> Her daily check-in. Nothing is pushed to Dana — if her words sound worrying, her exact quote appears on the Family updates page inside this demo.</span></span>
+    </p>
+
+    <div class="status-hero card" id="status-hero" aria-live="off">
+      <div class="status-hero-main">
+        <span class="status-icon" id="status-icon" aria-hidden="true"></span>
+        <div>
+          <h2 id="status-title">Checking today&rsquo;s thread…</h2>
+          <p id="status-detail">One moment while KinKeeper looks at today&rsquo;s check-in.</p>
+        </div>
+      </div>
+      <div class="status-side">
+        <button type="button" class="btn btn-primary status-cta" id="checkin-cta">Write Maggie&rsquo;s check-in</button>
+        <p class="status-next" id="status-next"></p>
+      </div>
+    </div>
+
+    <div class="today-grid">
+      <div class="card chat-column">
+        <div class="chat-head">
+          <div class="chat-head-row">
+            <h2>Today&rsquo;s conversation</h2>
+            <div class="chat-head-actions">
+              <button class="icon-btn" id="mic-btn" type="button" title="Dictate with your microphone" aria-label="Dictate Maggie's message with the microphone">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2.5" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3.5"/></svg>
+              </button>
+              <button class="icon-btn" id="voice-btn" type="button" title="Voice output is off — turn it on to have KinKeeper read replies aloud" aria-label="Turn voice output on or off" aria-pressed="false">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6.5 9H3v6h3.5L11 19V5z"/><path class="spk-waves" d="M15 9.5a4 4 0 0 1 0 5M17.5 7a7.5 7.5 0 0 1 0 10"/></svg>
+              </button>
+            </div>
+          </div>
+          <p class="speech-note" id="speech-note" hidden></p>
+        </div>
+
+        <div class="chat-scroll" id="chat" role="log" aria-label="Conversation between Maggie and KinKeeper"></div>
+
+        <p class="mic-note" id="mic-note" hidden></p>
+
+        <div class="suggestions" id="suggestions">
+          <span class="suggestions-label" id="suggestions-label">Maggie could say:</span>
+          <button type="button" class="chip suggestion" data-text="Good morning! I slept about 6 hours, took my meds, and walked the dog.">Slept 6 hours, took meds, walked the dog</button>
+          <button type="button" class="chip suggestion" data-text="My knee is acting up again.">My knee is acting up again</button>
+          <button type="button" class="chip suggestion" data-text="Oh... I fell yesterday. I'm fine, really.">Oh… I fell yesterday. I'm fine, really.</button>
+        </div>
+
+        <form class="composer" id="composer">
+          <label class="composer-label" for="chat-input">What Maggie says</label>
+          <div class="composer-row">
+            <input type="text" id="chat-input" placeholder="Type Maggie&rsquo;s check-in…" autocomplete="off" maxlength="500">
+            <button type="submit" class="btn btn-primary" id="send-btn">
+              <span id="send-label">Send</span>
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4z"/><path d="M22 2 11 13"/></svg>
+            </button>
+          </div>
+          <p class="composer-error" id="composer-error" role="alert" hidden></p>
+        </form>
+      </div>
+
+      <aside class="side-column">
+        <details class="card side-block" id="journal-block">
+          <summary>
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8v4l2.5 2.5"/><circle cx="12" cy="12" r="9"/></svg>
+            Earlier conversations
+          </summary>
+          <p class="side-note">KinKeeper remembers each check-in in Maggie&rsquo;s journal. When it says &ldquo;you&rsquo;ve mentioned your knee before&rdquo;, it is quoting these entries — even after this page is reloaded. The conversation above, by contrast, is just this visit&rsquo;s view.</p>
+          <div id="journal" class="journal"></div>
+          <div class="side-actions">
+            <button type="button" class="btn btn-ghost btn-small" id="journal-refresh">Refresh journal</button>
+          </div>
+          <p class="inline-error" id="journal-error" role="alert" hidden></p>
+        </details>
+
+        <section class="card side-block">
+          <h3>
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 17c3.5-7 6.5-7 6.5-1.5S13 21 20 8"/><circle cx="4" cy="17" r="1.4" fill="currentColor" stroke="none"/><circle cx="20" cy="8" r="1.4" fill="currentColor" stroke="none"/></svg>
+            How the thread works
+          </h3>
+          <ol class="thread-explainer">
+            <li>Maggie checks in once a day, in her own words.</li>
+            <li>KinKeeper remembers what she says and gently speaks first if a day goes quiet.</li>
+            <li>If her words sound worrying, a card appears in <button type="button" class="linklike" id="goto-family">Dana&rsquo;s family updates</button> — inside this demo only.</li>
+          </ol>
+        </section>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ========================= FAMILY UPDATES · DANA ========================= -->
+  <section class="panel" role="tabpanel" id="panel-family" aria-labelledby="tab-family" hidden>
+    <p class="role-banner">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      <span><strong>Dana&rsquo;s view.</strong> These cards wait on this page. KinKeeper never sends push, text, email, or calls — Dana would only see this by opening the app.</span>
+    </p>
+
+    <div class="family-wrap">
+      <div class="section-head">
+        <h2>Needs attention</h2>
+        <button type="button" class="btn btn-ghost btn-small" id="inbox-refresh">Refresh</button>
+      </div>
+      <p class="inline-error" id="inbox-error" role="alert" hidden></p>
+      <div id="inbox-open" class="thread-cards"></div>
+
+      <h2 class="subhead" id="earlier-head" hidden>Earlier — seen by family</h2>
+      <div id="inbox-seen" class="thread-cards"></div>
+
+      <div class="section-head subhead">
+        <h2>Weekly summary for Dana</h2>
+        <button type="button" class="btn btn-ghost btn-small" id="btn-digest">Refresh weekly summary</button>
+      </div>
+      <p class="inline-error" id="digest-error" role="alert" hidden></p>
+      <div id="digest" class="digest"></div>
+
+      <h2 class="subhead">Scheduled check-ins</h2>
+      <div id="inbox-followups" class="followups"></div>
+    </div>
+  </section>
+
+  <!-- ================================ SAFETY ================================ -->
+  <section class="panel" role="tabpanel" id="panel-safety" aria-labelledby="tab-safety" hidden>
+    <div class="safety-wrap">
+      <article class="card safety-block">
+        <h2>
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-3.5 8-10V5l-8-3-8 3v7c0 6.5 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+          What this demo can and cannot do
+        </h2>
+        <ul class="safety-list">
+          <li><strong>Maggie is fictional; what you type is not.</strong> Maggie Rivera is not a real person, and the seeded journal is sample data. Anything you type into this demo, however, is saved in the demo journal on this computer — so please enter only fictional details, never real personal information about anyone.</li>
+          <li><strong>Nothing is ever sent.</strong> No push notification, text message, email, or phone call leaves this page. Family cards wait in the Family updates view until someone opens it. &ldquo;Mark as seen&rdquo; only changes the card here — it does not message Maggie or confirm anyone is safe.</li>
+          <li><strong>No emergency response.</strong> KinKeeper cannot contact emergency services and must never be relied on in an urgent situation.</li>
+          <li><strong>No medical advice.</strong> KinKeeper is not a medical device. It repeats what Maggie said in plain words — it does not diagnose, monitor health conditions, or recommend treatment.</li>
+          <li><strong>Statuses describe words, not health.</strong> &ldquo;Checked in&rdquo; means Maggie sent a message today. &ldquo;Needs attention&rdquo; means her own words mentioned something like missed medication — it is a cue to look, not an assessment.</li>
+        </ul>
+      </article>
+
+      <article class="card safety-block">
+        <h2>
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          If a family member is concerned
+        </h2>
+        <p>In a real product, the right next step when a card worries you is simple: <strong>call or visit your person directly</strong>. A card is a reason to reach out yourself — never a substitute for it, and never proof that help is on the way. In this demo, marking a card as seen changes nothing outside this page.</p>
+      </article>
+
+      <article class="card safety-block">
+        <h2>
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.5"/></svg>
+          What stays, what fades
+        </h2>
+        <p>Maggie&rsquo;s journal and Dana&rsquo;s cards <strong>persist</strong> on this computer — reload the page and they are still there, which is how KinKeeper recalls earlier days. The visible conversation on the Today view is <strong>session-only</strong>: it clears on reload, and KinKeeper says so. The demo itself runs locally in one process on this machine — no cloud, no accounts. The optional microphone and voice buttons use your browser&rsquo;s own speech features; depending on the browser, that audio may be processed by the browser maker rather than staying on this machine.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============================ EXPLORE THE DEMO ============================ -->
+  <section class="panel" role="tabpanel" id="panel-explore" aria-labelledby="tab-explore" hidden>
+    <p class="role-banner sim-banner">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+      <span><strong>Simulation.</strong> This view moves the demo&rsquo;s virtual clock so you can watch a quiet day unfold in minutes. Only the clock changes — no one is contacted and nothing leaves this page.</span>
+    </p>
+
+    <div class="explore-grid">
+      <section class="card side-block">
+        <h2 class="explore-title">A two-minute story, in plain words</h2>
+        <ol class="steps" id="guided-steps">
+          <li><button type="button" class="step" data-step="checkin">
+            <span class="step-check" aria-hidden="true"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m4 12.5 5 5L20 6.5"/></svg></span>
+            <span><strong>Maggie says good morning.</strong> KinKeeper remembers her words and, if she mentions her knee, recalls earlier days she mentioned it.</span>
+          </button></li>
+          <li><button type="button" class="step" data-step="advance">
+            <span class="step-check" aria-hidden="true"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m4 12.5 5 5L20 6.5"/></svg></span>
+            <span><strong>The next morning goes quiet.</strong> Move the clock past Maggie&rsquo;s usual check-in time — KinKeeper notices the silence and writes a card for Dana.</span>
+          </button></li>
+          <li><button type="button" class="step" data-step="proactive">
+            <span class="step-check" aria-hidden="true"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m4 12.5 5 5L20 6.5"/></svg></span>
+            <span><strong>KinKeeper speaks first.</strong> Instead of waiting to be asked, it gently asks Maggie how she is — that prompt appears on her Today view.</span>
+          </button></li>
+          <li><button type="button" class="step" data-step="fall">
+            <span class="step-check" aria-hidden="true"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m4 12.5 5 5L20 6.5"/></svg></span>
+            <span><strong>Maggie answers vaguely about a fall.</strong> Worrying words plus a short reply put an amber card with her exact quote in Dana&rsquo;s updates.</span>
+          </button></li>
+          <li><button type="button" class="step" data-step="inbox">
+            <span class="step-check" aria-hidden="true"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m4 12.5 5 5L20 6.5"/></svg></span>
+            <span><strong>Dana opens Family updates</strong> and marks the card as seen — an inbox state only, with no message back to Maggie.</span>
+          </button></li>
+          <li><button type="button" class="step" data-step="digest">
+            <span class="step-check" aria-hidden="true"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m4 12.5 5 5L20 6.5"/></svg></span>
+            <span><strong>Dana reads the weekly summary</strong> — which days Maggie checked in, her mood, and topics that keep coming up.</span>
+          </button></li>
+        </ol>
+      </section>
+
+      <section class="card side-block">
+        <h2 class="explore-title">Clock controls</h2>
+        <p class="side-note">These only move the simulated clock. When a morning passes without a check-in, KinKeeper reacts on its own.</p>
+        <div class="controls">
+          <button type="button" class="btn btn-ghost" id="btn-advance-1h">Move forward 1 hour</button>
+          <button type="button" class="btn btn-ghost" id="btn-advance-morning">Skip to tomorrow morning, 9:50</button>
+          <button type="button" class="btn btn-danger" id="btn-reset">Start the demo over</button>
+        </div>
+        <p class="side-note" id="control-note">Starting over clears the fictional journal and cards and returns the clock to 8:55 on the first demo morning. You will be asked to confirm first.</p>
+        <p class="inline-error" id="controls-error" role="alert" hidden></p>
+      </section>
+
+      <section class="card side-block explore-how">
+        <h2 class="explore-title">How one check-in travels the thread</h2>
+        <ol class="thread-explainer">
+          <li><strong>Maggie&rsquo;s words</strong> — exactly what she said, kept in her journal on this computer.</li>
+          <li><strong>What KinKeeper noticed</strong> — plain facts from her words, like &ldquo;medication: not taken (her words)&rdquo;. Negations count: &ldquo;I did not fall&rdquo; is recorded as ruled out, not as a fall.</li>
+          <li><strong>Speaking first</strong> — when a morning goes quiet, KinKeeper starts the conversation instead of waiting.</li>
+          <li><strong>A card for Dana</strong> — worrying words become an amber card with Maggie&rsquo;s exact quote, waiting in Family updates. Nothing is sent anywhere.</li>
+        </ol>
+      </section>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <p>KinKeeper is a synthetic hackathon demo. Fictional character and sample data; what you type is saved in the local demo journal on this computer. No real notifications, no emergency response, no medical advice.</p>
+</footer>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>
